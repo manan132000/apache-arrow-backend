@@ -8,7 +8,7 @@
 		<!--  lookup parent from repository  -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>pictogram</artifactId>
+	<artifactId>arrow</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>pictogram</name>
@@ -33,6 +33,11 @@
 			<artifactId>arrow-vector</artifactId>
 			<version>${arrow.version}</version>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>io.github.datafusion-contrib</groupId>-->
+<!--			<artifactId>datafusion-java</artifactId>-->
+<!--			<version>0.16.0</version>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.apache.arrow</groupId>
 			<artifactId>arrow-memory-netty</artifactId>
@@ -88,10 +93,37 @@
 					<target>7</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.2.0</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/main/resources</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 		<resources>
 			<resource>
-				<directory>src/main/resources</directory>
+				<directory>resources</directory>
+				<targetPath>${project.build.outputDirectory}</targetPath>
+				<includes>
+					<include>properties.json</include>
+					<include>application.properties</include>
+				</includes>
 			</resource>
 		</resources>
 	</build>
